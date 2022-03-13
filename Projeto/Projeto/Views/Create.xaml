@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Projeto.ViewModels.Task"
+             x:Name="CreatePage"
+             x:Class="Projeto.Views.Create"
+             Shell.PresentationMode="ModalAnimated">
+    <ContentPage.BindingContext>
+        <viewModels:CreateViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Frame BackgroundColor="White" CornerRadius="10" Margin="30" HasShadow="True">
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label HorizontalOptions="FillAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Criar" FontSize="16" TextColor="Wheat"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="Tarefa" FontSize="20"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Text="X" HorizontalOptions="End" FontSize="30" TextColor="red" Padding="20,10">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ReturnCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <Frame  Padding="0" CornerRadius="0" >
+                    <Entry Placeholder="Titulo"  Text="{Binding task.Titulo}" />
+                </Frame>
+                <Frame  Padding="0" CornerRadius="0" >
+                    <DatePicker Date="{Binding task.Data}"  Format="dd/MM/yyyy"/>
+                </Frame>
+                <Frame  Padding="0" CornerRadius="0" >
+                    <Editor Text="{Binding task.Descricao}" />
+                </Frame>
+                <StackLayout Orientation="Horizontal">
+                    <Frame  Padding="0" CornerRadius="0" >
+                        <CheckBox IsChecked="{Binding task.Finalizada}"/>
+                    </Frame>
+                    <Label Text="Finalizada?"/>
+                </StackLayout>
+
+                <Button Text="Adicionar" Command="{Binding Source={x:Reference CreatePage}, Path=BindingContext.CreateTaskCommand}" CommandParameter="{Binding task}" Visual="Default" Padding="20,10" BackgroundColor="#4043C9" VerticalOptions="EndAndExpand" HorizontalOptions="End"/>
+            </StackLayout>
+            
+            
+        </Frame>
+
+
+
+
+
+
+
+    </ContentPage.Content>
+</ContentPage>

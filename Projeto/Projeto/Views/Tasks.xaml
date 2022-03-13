@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Projeto.ViewModels"
+             x:Name="TasksPage"
+             xmlns:conversor="clr-namespace:Projeto.Converter"
+             x:Class="Projeto.Views.Tasks">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conversor:TachadoConverter x:Key="Tachado"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewModels:TasksViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="red">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Margin="20,40,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding day}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Frame Grid.Column="1" Margin="10,10,10,10" CornerRadius="20">
+                    <StackLayout>
+                        <DatePicker Format="dd/MM/yyyy" FontSize="15" Margin="-5" Date="{Binding taskDate}" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+
+            <Frame Grid.Row="1">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer />
+                </Frame.GestureRecognizers>
+                <Grid>
+                    <ScrollView>
+                        <StackLayout>
+                            <Grid ColumnDefinitions="*,70" RowDefinitions="50" Margin="10,0">
+                                <Frame Padding="10,0" HasShadow="False" BorderColor="Orange" CornerRadius="0">
+                                    <Entry Text="{Binding SearchWord}"  Placeholder="Pesquisa"/>
+                                </Frame>
+                                <Button Command="{Binding SearchCommand}" Grid.Column="1" Text="OK" />
+                            </Grid>
+                            <CollectionView ItemsSource="{Binding listTasks}" >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentView Padding="10">
+                                            <SwipeView>
+                                                <SwipeView.RightItems>
+                                                    <SwipeItems>
+                                                        <SwipeItem BackgroundColor="#EE6C4D" Text="Excluir" Command="{Binding Source={x:Reference TasksPage}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding .}"/>
+                                                    </SwipeItems>
+                                                </SwipeView.RightItems>
+                                                <Grid Padding="0,20" >
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference TasksPage}, Path=BindingContext.DetailCommand}" CommandParameter="{Binding .}"/>
+                                                    </Grid.GestureRecognizers>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="4*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackLayout>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Source={x:Reference TasksPage}, Path=BindingContext.ChangeStatusCommand}" CommandParameter="{Binding .}"/>
+                                                        </StackLayout.GestureRecognizers>
+                                                        <Label Padding="20,0,0,0" Text="{Binding Status}" TextColor="{Binding Cor}"  FontSize="Large">
+                                                        </Label>
+                                                    </StackLayout>
+                                                    <Label x:Name="LblTarefa"  Grid.Column="1" TextDecorations="{Binding Finalizada, Converter={StaticResource Tachado}}">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding Titulo}" />
+                                                                <Span Text="&#10;" />
+                                                                <Span Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </Grid>
+                                            </SwipeView>
+                                        </ContentView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </ScrollView>
+                    <Button Command="{Binding CreateCommand}" Text="+" BackgroundColor="#4043C9" CornerRadius="50" FontSize="36" TextColor="Wheat" HorizontalOptions="End" VerticalOptions="End" TranslationY="-30" WidthRequest="75" HeightRequest="75"/>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

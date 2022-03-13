@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Projeto.ViewModels"
+             x:Name="DetailPage"
+             x:Class="Projeto.Views.Detail">
+    <ContentPage.BindingContext>
+        <viewModels:DetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BackgroundColor="White" CornerRadius="10" Margin="30" HasShadow="True">
+                <StackLayout Orientation="Vertical" Spacing="20">
+                    <StackLayout Orientation="Horizontal">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="TITULO: "/>
+                                    <Span Text="{Binding task.Titulo}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="DATA: "/>
+                                    <Span Text="{Binding task.Data}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="FINALIZADA: "/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <StackLayout Padding="0,-7,0,0">
+                            <CheckBox IsChecked="{Binding task.Finalizada}" IsEnabled="False"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="DESCRIÇÃO: "/>
+                                    <Span Text="{Binding task.Descricao}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+
+
+
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
